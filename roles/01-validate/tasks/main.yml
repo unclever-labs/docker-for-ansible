@@ -1,0 +1,14 @@
+---
+- name: Register Disk Size
+  shell: df -Ph / | tail -1 | awk {%raw%}'{print $2}'{%endraw%}
+  register: disk_size
+  changed_when: false
+
+- debug:
+    msg: "Disk Available: {{disk_size.stdout}}"
+
+- fail:
+    msg: "Your docker directory does not have enough space. Required: 50 [GB] Actual: {{disk_size.stdout}}"
+  when: >-
+    ('g' in disk_size.stdout|lower and disk_size.stdout | regex_replace('[gG].*', '') | int < 50) or
+    (not 'g' in disk_size.stdout|lower and not 't' in disk_size.stdout|lower)

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: "{{become_sudo}}"
+  any_errors_fatal: true
+  vars_files:
+  - vars.yml
+  roles:
+  - 01-validate
+  - 02-deps

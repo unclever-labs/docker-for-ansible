@@ -1,0 +1,8 @@
+---
+- name: install dependencies (apt)
+  package:
+    name: "{{item}}"
+    state: present
+    install_recommends: false
+  with_items:
+    - libpcap-dev

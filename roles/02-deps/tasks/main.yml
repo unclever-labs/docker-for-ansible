@@ -1,0 +1,12 @@
+---
+- name: create /etc/unclever dir
+  file:
+    path: /etc/unclever
+    state: directory
+    mode: '0755'
+
+- include: deps-debian-ubuntu.yml
+  when: ansible_os_family in ['Debian', 'Ubuntu']
+
+- include: deps-centos-redhat.yml
+  when: ansible_os_family in ['CentOS', 'RedHat']
